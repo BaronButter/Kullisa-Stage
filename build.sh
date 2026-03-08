@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# =============================================================================
+# VSCodium Build Script
+# =============================================================================
+# Description: Haupt-Build-Skript für VSCodium
+#              Kompiliert VSCode-Quellcode und erstellt ausführbare Binärdateien
+# Usage: ./build.sh
+# Requirements: Node.js 22.22.0, npm, gulp
+# =============================================================================
 # shellcheck disable=SC1091
 
 set -ex

@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# =============================================================================
+# VSCodium Release Script
+# =============================================================================
+# Description: Erstellt GitHub-Releases für VSCodium
+#              Generiert Release-Notes und lädt Assets hoch
+# Usage: ./release.sh (erfordert GH_TOKEN oder GITHUB_TOKEN)
+# Requirements: GitHub CLI (gh), github-release-cli
+# =============================================================================
 # shellcheck disable=SC1091
 
 set -ex

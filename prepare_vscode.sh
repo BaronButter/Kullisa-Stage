@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# =============================================================================
+# VSCodium Prepare Script
+# =============================================================================
+# Description: Bereitet VSCode-Quellcode für VSCodium vor
+#              Kopiert stabile/insider-Quelldateien und passt product.json an
+# Usage: Wird automatisch von build.sh aufgerufen
+# Requirements: jq, VSCode-Quelldateien in src/
+# =============================================================================
 # shellcheck disable=SC1091,2154
 
 set -e
