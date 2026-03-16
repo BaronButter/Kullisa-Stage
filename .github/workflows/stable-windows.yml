@@ -217,7 +217,7 @@ jobs:
 
       - name: Prepare assets
         run: ./prepare_assets.sh
-        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
+        if: env.SHOULD_BUILD == 'yes'
 
       - name: Upload unsigned artifacts
         id: upload-unsigned-artifacts
@@ -227,8 +227,9 @@ jobs:
           path: |
             assets/*.exe
             assets/*.msi
-          retention-days: 1
-        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
+            assets/*.zip
+          retention-days: 3
+        if: env.SHOULD_BUILD == 'yes'
 
       # - name: Signing
       #   uses: signpath/github-action-submit-signing-request@v2
@@ -247,7 +248,7 @@ jobs:
 
       - name: Prepare checksums
         run: ./prepare_checksums.sh
-        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
+        if: env.SHOULD_BUILD == 'yes'
 
       - name: Release
         env:
