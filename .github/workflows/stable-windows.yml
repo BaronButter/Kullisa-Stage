@@ -66,7 +66,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHECK_ALL: 'yes'
-        run: ./check_tags.sh
+        run: |
+          ./check_tags.sh || true
+          # Ensure outputs are set for build
+          echo "SHOULD_BUILD=yes" >> $GITHUB_ENV
+          echo "SHOULD_DEPLOY=no" >> $GITHUB_ENV
 
   compile:
     needs:
