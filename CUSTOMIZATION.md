@@ -3,7 +3,7 @@
 **Projektname:** Kullisa Labs  
 **Letzte Aktualisierung:** 2026-03-08
 
----
+----
 
 ## 🎯 Ziel
 
