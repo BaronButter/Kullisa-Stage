@@ -216,6 +216,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           npm_config_arch: ${{ matrix.vscode_arch }}
           npm_config_target_arch: ${{ matrix.vscode_arch }}
+          SHOULD_BUILD_MSI: 'no'
         run: ./build/windows/package.sh
         if: env.SHOULD_BUILD == 'yes'
 
