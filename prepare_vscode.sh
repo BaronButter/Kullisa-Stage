@@ -257,6 +257,9 @@ replace "s|\\[\\/\\* BUILTIN_ANNOUNCEMENTS \\*\\/\\]|$( tr -d '\n' < ../announce
 replace 's|Microsoft Corporation|VSCodium|' build/lib/electron.ts
 replace 's|([0-9]) Microsoft|\1 VSCodium|' build/lib/electron.ts
 
+# [VSCODIUM-EXPERT | 2026-03-20] Theme: Default Light Modern als Standard setzen
+replace "s|export const DEFAULT_THEME_ID = 'Default Dark Modern';|export const DEFAULT_THEME_ID = 'Default Light Modern';|" "src/vs/workbench/services/themes/common/workbenchThemeService.ts"
+
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
   # unless the app name is code-oss
