@@ -200,7 +200,7 @@ jobs:
 
       - name: Check existing VSCodium tags/releases
         env:
-          DISABLE_MSI: ${{ vars.DISABLE_STABLE_MSI }}
+          DISABLE_MSI: 'yes'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./check_tags.sh
         if: env.SHOULD_BUILD == 'yes'
