@@ -260,6 +260,9 @@ replace 's|([0-9]) Microsoft|\1 VSCodium|' build/lib/electron.ts
 # [VSCODIUM-EXPERT | 2026-03-20] Theme: Default Light Modern als Standard setzen
 replace "s|export const DEFAULT_THEME_ID = 'Default Dark Modern';|export const DEFAULT_THEME_ID = 'Default Light Modern';|" "src/vs/workbench/services/themes/common/workbenchThemeService.ts"
 
+# [VSCODIUM-EXPERT | 2026-03-20] Wasserzeichen: Kullisa Logo im Editor-Hintergrund
+cp "../src/stable/resources/watermark.svg" "src/vs/workbench/browser/media/watermark.svg"
+
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
   # unless the app name is code-oss
