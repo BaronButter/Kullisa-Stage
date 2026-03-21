@@ -57,20 +57,22 @@ for ext in "${EXTENSIONS[@]}"; do
   
   if curl -fsSL --retry 3 --retry-delay 2 "${download_url}" -o "${output_file}"; then
     # Prüfen ob die Datei gültig ist (mindestens 1KB)
-    file_size=$(stat -f%z "${output_file}" 2>/dev/null || stat -c%s "${output_file}" 2>/dev/null || echo "0")
+    # Cross-platform: wc -c funktioniert auf Linux, macOS und Windows (Git Bash)
+    file_size=$(wc -c < "${output_file}" 2>/dev/null || echo "0")
+    file_size=$(echo "${file_size}" | tr -d ' ')  # Whitespace entfernen
     
     if [[ "${file_size}" -gt 1024 ]]; then
       echo "  ✓ Erfolgreich: ${file_size} Bytes"
-      ((SUCCESS_COUNT++))
+      SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
     else
       echo "  ✗ Fehlgeschlagen: Datei zu klein (${file_size} Bytes)"
       rm -f "${output_file}"
-      ((FAILED_COUNT++))
+      FAILED_COUNT=$((FAILED_COUNT + 1))
     fi
   else
     echo "  ✗ Fehlgeschlagen: Download fehlgeschlagen"
     rm -f "${output_file}"
-    ((FAILED_COUNT++))
+    FAILED_COUNT=$((FAILED_COUNT + 1))
   fi
 done
 
