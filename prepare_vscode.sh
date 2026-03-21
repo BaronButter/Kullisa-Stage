@@ -302,4 +302,26 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   sed -i 's|Microsoft Corporation|VSCodium|' build/win32/code.iss
 fi
 
+# [VSCODIUM-EXPERT | 2026-03-21] Extensions: 15 Extensions vorinstallieren
+echo "[VSCODIUM-EXPERT] Installing prebundled extensions..."
 cd ..
+
+# Extensions herunterladen
+if [[ -f "scripts/download-extensions.sh" ]]; then
+  bash scripts/download-extensions.sh
+fi
+
+# Extensions in das vscode-Verzeichnis kopieren (für Vorinstallation)
+if [[ -d "extensions" ]]; then
+  mkdir -p vscode/resources/app/extensions
+  for vsix in extensions/*.vsix; do
+    if [[ -f "$vsix" ]]; then
+      ext_name=$(basename "$vsix" .vsix)
+      echo "  → Installing extension: ${ext_name}"
+      unzip -q "$vsix" -d "vscode/resources/app/extensions/${ext_name}" 2>/dev/null || true
+    fi
+  done
+  echo "[VSCODIUM-EXPERT] Extensions installed successfully"
+fi
+
+cd vscode || { echo "'vscode' dir not found"; exit 1; }
