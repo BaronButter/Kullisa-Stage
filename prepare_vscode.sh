@@ -326,5 +326,3 @@ if [[ -d "extensions" ]]; then
   done
   echo "[VSCODIUM-EXPERT] Extensions installed successfully"
 fi
-
-cd vscode || { echo "'vscode' dir not found"; exit 1; }
