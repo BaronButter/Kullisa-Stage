@@ -131,6 +131,9 @@ else
   setpath "product" "win32ContextMenu.arm64.clsid" "B2C3D4E5-F6A7-8901-BCDE-F1234567890"
 fi
 
+# [VSCODIUM-EXPERT | 2026-03-21] Updates deaktivieren für V1.0
+setpath "product" "updateUrl" ""
+
 setpath_json "product" "tunnelApplicationConfig" '{}'
 
 jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product.json )
