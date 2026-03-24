@@ -15,6 +15,12 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 { set +x; } 2>/dev/null
 
+# Extensions vorinstallieren (Kullisa Desktop)
+if [ -d "../extensions" ]; then
+  echo "Kopiere vorinstallierte Extensions..."
+  cp -r ../extensions/* resources/app/extensions/ 2>/dev/null || true
+fi
+
 # {{{ product.json
 cp product.json{,.bak}
 
