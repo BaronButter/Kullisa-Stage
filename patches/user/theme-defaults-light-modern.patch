@@ -1,0 +1,21 @@
+/*
+  Author: VSCODIUM-EXPERT
+  Date: 2026-03-25
+  Time: 21:30 CET
+  Description: Setzt "Default Light Modern" als Standard-Farbschema für Kullisa Stage.
+               Geändert wird die Built-in Extension "vscode.theme-defaults" (extensions/theme-defaults/package.json).
+               Diese Extension ist fest eingebaut und kann vom Nutzer nicht deinstalliert werden.
+               Sie steuert welches Farbschema beim ersten Start aktiviert ist.
+               Ändert configurationDefaults.workbench.colorTheme von "Default Dark Modern" auf "Default Light Modern".
+*/
+
+diff --git a/extensions/theme-defaults/package.json b/extensions/theme-defaults/package.json
+--- a/extensions/theme-defaults/package.json
++++ b/extensions/theme-defaults/package.json
+@@ -1,6 +1,6 @@
+ 	"configurationDefaults": {
+-		"workbench.colorTheme": "Default Dark Modern",
++		"workbench.colorTheme": "Default Light Modern",
+ 		"workbench.preferredDarkColorTheme": "Default Dark Modern",
+ 		"workbench.preferredLightColorTheme": "Default Light Modern",
+ 		"workbench.preferredHighContrastColorTheme": "Default High Contrast",

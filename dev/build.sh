@@ -5,12 +5,13 @@
 # to run with Bash: "C:\Program Files\Git\bin\bash.exe" ./dev/build.sh
 ###
 
-export APP_NAME="VSCodium"
+# [VSCODIUM-EXPERT | 2026-03-25 22:00] Iteration 1 – APP_NAME und ORG_NAME auf Kullisa Stage gesetzt (BINARY_NAME und GH_REPO_PATH folgen in Iteration 2)
+export APP_NAME="Kullisa Stage"
 export ASSETS_REPOSITORY="VSCodium/vscodium"
 export BINARY_NAME="codium"
 export CI_BUILD="no"
 export GH_REPO_PATH="VSCodium/vscodium"
-export ORG_NAME="VSCodium"
+export ORG_NAME="KullisaLabs"
 export SHOULD_BUILD="yes"
 export SKIP_ASSETS="yes"
 export SKIP_BUILD="no"
