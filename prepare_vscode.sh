@@ -15,21 +15,11 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 { set +x; } 2>/dev/null
 
-# Extensions vorinstallieren (Kullisa Desktop)
-# [VSCODIUM-EXPERT | 2026-03-26] Logging aktiviert - Fehler werden jetzt sichtbar
-if [ -d "../extensions" ]; then
-  echo "=== Kullisa: Starte Extension-Integration ==="
-  echo "=== Kullisa: Quellordner: $(ls ../extensions/ | wc -l) Extensions verfügbar ==="
-  EXT_TARGET="resources/app/extensions"
-  if [ -d "${EXT_TARGET}" ]; then
-    cp -r ../extensions/* "${EXT_TARGET}/"
-    echo "=== Kullisa: Extensions kopiert OK. Zielordner hat jetzt $(ls ${EXT_TARGET}/ | wc -l) Einträge ==="
-  else
-    echo "=== Kullisa: WARNUNG: Zielordner '${EXT_TARGET}' nicht gefunden! ==="
-    echo "=== Kullisa: Aktuelles Verzeichnis: $(pwd) ==="
-    echo "=== Kullisa: Verfügbare Unterordner: $(ls -d */ 2>/dev/null | head -20) ==="
-  fi
-fi
+# [VSCODIUM-EXPERT | 2026-03-26 16:00] Iteration 2 – Built‑in‑Kopie entfernt
+# Hintergrund: Extensions dürfen NICHT als „Eingebaut“ erscheinen. Die kuratierte Liste
+# wird stattdessen beim Packaging nach resources/app/kullisa-curated gelegt und beim
+# ersten App‑Start in das User‑Verzeichnis installiert (siehe First‑Run Bootstrap).
+# Daher: Keine Kopie mehr nach resources/app/extensions in dieser Phase.
 
 # {{{ product.json
 cp product.json{,.bak}

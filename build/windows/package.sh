@@ -33,13 +33,32 @@ node build/lib/policies/policyGenerator.ts build/lib/policies/policyData.jsonc w
 
 npm run gulp "vscode-win32-${VSCODE_ARCH}-min-ci"
 
-# [VSCODIUM-EXPERT | 2026-03-26] Extensions nach Gulp-Build in fertigen Output-Ordner kopieren
-# Dieser Schritt garantiert Extensions im finalem Installer (Backup-Kopie)
+# [VSCODIUM-EXPERT | 2026-03-26 15:58] Iteration 2 – First-Run Autoinstaller
+# Ziel: Kuratierte Extensions sollen als "Installiert" (User) erscheinen, nicht als Built-in.
+# Maßnahme: Keine Kopie nach resources/app/extensions mehr. Stattdessen:
+#  1) Kuratierte Extensions nach resources/app/kullisa-curated legen
+#  2) First-Run Bootstrap-Skript nach resources/app/kullisa/
+#  3) Hook in out/main.js injizieren, der das Bootstrap lädt
+
+# 1) Kuratierte Extensions vorbereiten
 if [ -d "../extensions" ]; then
-  echo "=== Kullisa: Kopiere Extensions in VSCode-win32-${VSCODE_ARCH} ==="
-  mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/extensions"
-  cp -r ../extensions/* "../VSCode-win32-${VSCODE_ARCH}/resources/app/extensions/"
-  echo "=== Kullisa: $(ls ../VSCode-win32-${VSCODE_ARCH}/resources/app/extensions/ | wc -l) Extensions im Output-Ordner ==="
+  echo "=== Kullisa: Kuratierte Extensions für User-Installation vorbereiten ==="
+  mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated"
+  cp -r ../extensions/* "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated/"
+  echo "=== Kullisa: $(ls ../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated/ | wc -l) kuratierte Extensions vorbereitet ==="
+fi
+
+# 2) Bootstrap-Skript ablegen
+mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa"
+cp ../kullisa/kullisa-first-run.js "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa/"
+
+# 3) First-Run Hook in Main-Prozess injizieren
+MAIN_OUT="../VSCode-win32-${VSCODE_ARCH}/resources/app/out/main.js"
+if [ -f "$MAIN_OUT" ]; then
+  printf "\n;try{require('../kullisa/kullisa-first-run.js')}catch(e){}\n" >> "$MAIN_OUT"
+  echo "=== Kullisa: First-Run Hook in main.js injiziert ==="
+else
+  echo "=== Kullisa: WARNUNG: main.js nicht gefunden: $MAIN_OUT ==="
 fi
 
 . ../build_cli.sh
