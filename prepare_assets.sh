@@ -135,13 +135,15 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
 
   if [[ "${VSCODE_ARCH}" == "ia32" || "${VSCODE_ARCH}" == "x64" ]]; then
     if [[ "${SHOULD_BUILD_MSI}" != "no" ]]; then
+      # [VSCODIUM-EXPERT | 2026-03-26 00:45 CET] Robuste Suche: findet MSI unabhängig vom Präfix-Namen
       echo "Moving MSI"
-      mv "build\\windows\\msi\\releasedir\\${APP_NAME}-${VSCODE_ARCH}-${RELEASE_VERSION}.msi" assets/
+      find "build/windows/msi/releasedir" -name "*-${VSCODE_ARCH}-${RELEASE_VERSION}.msi" -exec mv {} assets/ \;
     fi
 
     if [[ "${SHOULD_BUILD_MSI_NOUP}" != "no" ]]; then
+      # [VSCODIUM-EXPERT | 2026-03-26 00:45 CET] Robuste Suche: findet MSI unabhängig vom Präfix-Namen
       echo "Moving MSI with disabled updates"
-      mv "build\\windows\\msi\\releasedir\\${APP_NAME}-${VSCODE_ARCH}-updates-disabled-${RELEASE_VERSION}.msi" assets/
+      find "build/windows/msi/releasedir" -name "*-${VSCODE_ARCH}-updates-disabled-${RELEASE_VERSION}.msi" -exec mv {} assets/ \;
     fi
   fi
 
