@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
-/*
-  Author: VSCODIUM-EXPERT
-  Date: 2026-03-26
-  Time: 23:50 CET
-  Description: Erzeugt ein Windows-Portable-ZIP aus einem vorhandenen VSCode-win32-<arch> Ordner.
-               - Legt data/ und data/extensions an
-               - Kopiert kuratierte Add-ons nach data/extensions (Quelle: resources/app/kullisa-curated oder ./extensions/*)
-               - Schreibt data/user/settings.json mit workbench.colorTheme = "Default Light Modern"
-               - Packt alles zu assets/KullisaStage-Portable-<arch>-<version>.zip
-*/
+#
+#  Author: VSCODIUM-EXPERT
+#  Date: 2026-03-26
+#  Time: 23:50 CET
+#  Description: Erzeugt ein Windows-Portable-ZIP aus einem vorhandenen VSCode-win32-<arch> Ordner.
+#               - Legt data/ und data/extensions an
+#               - Kopiert kuratierte Add-ons nach data/extensions (Quelle: resources/app/kullisa-curated oder ./extensions/*)
+#               - Schreibt data/user/settings.json mit workbench.colorTheme = "Default Light Modern"
+#               - Packt alles zu assets/KullisaStage-Portable-<arch>-<version>.zip
 
 set -euo pipefail
 
@@ -73,4 +72,3 @@ fi
 
 echo "[ OK ] Portable ZIP erstellt: ${ZIP_OUT}"
 echo "Test: ZIP entpacken, EXE im Ordner starten → Tab 'Installiert' zeigt Add-ons, Theme ist hell."
-
