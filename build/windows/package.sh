@@ -33,6 +33,15 @@ node build/lib/policies/policyGenerator.ts build/lib/policies/policyData.jsonc w
 
 npm run gulp "vscode-win32-${VSCODE_ARCH}-min-ci"
 
+# [VSCODIUM-EXPERT | 2026-03-26] Extensions nach Gulp-Build in fertigen Output-Ordner kopieren
+# Dieser Schritt garantiert Extensions im finalem Installer (Backup-Kopie)
+if [ -d "../extensions" ]; then
+  echo "=== Kullisa: Kopiere Extensions in VSCode-win32-${VSCODE_ARCH} ==="
+  mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/extensions"
+  cp -r ../extensions/* "../VSCode-win32-${VSCODE_ARCH}/resources/app/extensions/"
+  echo "=== Kullisa: $(ls ../VSCode-win32-${VSCODE_ARCH}/resources/app/extensions/ | wc -l) Extensions im Output-Ordner ==="
+fi
+
 . ../build_cli.sh
 
 if [[ "${VSCODE_ARCH}" == "x64" ]]; then

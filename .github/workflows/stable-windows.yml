@@ -25,7 +25,8 @@ on:
     - '**/*.md'
 
 env:
-  APP_NAME: VSCodium
+  # [VSCODIUM-EXPERT | 2026-03-26] APP_NAME auf Kullisa Stage gesetzt
+  APP_NAME: Kullisa Stage
   ASSETS_REPOSITORY: ${{ github.repository }}
   BINARY_NAME: codium
   GH_REPO_PATH: ${{ github.repository }}

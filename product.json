@@ -627,5 +627,8 @@
     "gruntfuggly.todo-tree": {
       "default": false
     }
+  },
+  "configurationDefaults": {
+    "workbench.colorTheme": "Default Light Modern"
   }
 }

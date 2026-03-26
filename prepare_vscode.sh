@@ -16,9 +16,19 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 { set +x; } 2>/dev/null
 
 # Extensions vorinstallieren (Kullisa Desktop)
+# [VSCODIUM-EXPERT | 2026-03-26] Logging aktiviert - Fehler werden jetzt sichtbar
 if [ -d "../extensions" ]; then
-  echo "Kopiere vorinstallierte Extensions..."
-  cp -r ../extensions/* resources/app/extensions/ 2>/dev/null || true
+  echo "=== Kullisa: Starte Extension-Integration ==="
+  echo "=== Kullisa: Quellordner: $(ls ../extensions/ | wc -l) Extensions verfügbar ==="
+  EXT_TARGET="resources/app/extensions"
+  if [ -d "${EXT_TARGET}" ]; then
+    cp -r ../extensions/* "${EXT_TARGET}/"
+    echo "=== Kullisa: Extensions kopiert OK. Zielordner hat jetzt $(ls ${EXT_TARGET}/ | wc -l) Einträge ==="
+  else
+    echo "=== Kullisa: WARNUNG: Zielordner '${EXT_TARGET}' nicht gefunden! ==="
+    echo "=== Kullisa: Aktuelles Verzeichnis: $(pwd) ==="
+    echo "=== Kullisa: Verfügbare Unterordner: $(ls -d */ 2>/dev/null | head -20) ==="
+  fi
 fi
 
 # {{{ product.json
@@ -136,19 +146,8 @@ echo "${jsonTmp}" > product.json && unset jsonTmp
 cat product.json
 # }}}
 
-# {{{ Theme: Default Light Modern als Standard setzen
-# [VSCODIUM-EXPERT | 2026-03-25 23:15 CET]
-# Setzt workbench.colorTheme in der Built-in Extension "vscode.theme-defaults"
-# (extensions/theme-defaults/package.json) auf "Default Light Modern".
-# Methode: jq – robust, keine Zeilennummern, kein Git-Hash nötig.
-THEME_DEFAULTS_PKG="extensions/theme-defaults/package.json"
-if [[ -f "${THEME_DEFAULTS_PKG}" ]]; then
-  jsonTmp=$( jq --arg v "Default Light Modern" '.configurationDefaults["workbench.colorTheme"]=$v' "${THEME_DEFAULTS_PKG}" )
-  echo "${jsonTmp}" > "${THEME_DEFAULTS_PKG}"
-  unset jsonTmp
-  echo "Theme set to: Default Light Modern"
-fi
-# }}}
+# [VSCODIUM-EXPERT | 2026-03-26] Theme: Default Light Modern wird über product.json configurationDefaults gesetzt
+# Kein Code nötig — product.json Zeile "configurationDefaults.workbench.colorTheme" übernimmt das
 
 # include common functions
 . ../utils.sh
