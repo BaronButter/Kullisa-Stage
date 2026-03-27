@@ -124,28 +124,24 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   cd ..
 
   if [[ "${SHOULD_BUILD_EXE_SYS}" != "no" ]]; then
-    # [VSCODIUM-EXPERT | 2026-03-26] EXE-Name auf KullisaStageSetup gesetzt (kein Leerzeichen)
     echo "Moving System EXE"
-    mv "vscode\\.build\\win32-${VSCODE_ARCH}\\system-setup\\VSCodeSetup.exe" "assets\\KullisaStageSetup-${VSCODE_ARCH}-${RELEASE_VERSION}.exe"
+    mv "vscode\\.build\\win32-${VSCODE_ARCH}\\system-setup\\VSCodeSetup.exe" "assets\\${APP_NAME}Setup-${VSCODE_ARCH}-${RELEASE_VERSION}.exe"
   fi
 
   if [[ "${SHOULD_BUILD_EXE_USR}" != "no" ]]; then
-    # [VSCODIUM-EXPERT | 2026-03-26] EXE-Name auf KullisaStageUserSetup gesetzt (kein Leerzeichen)
     echo "Moving User EXE"
-    mv "vscode\\.build\\win32-${VSCODE_ARCH}\\user-setup\\VSCodeSetup.exe" "assets\\KullisaStageUserSetup-${VSCODE_ARCH}-${RELEASE_VERSION}.exe"
+    mv "vscode\\.build\\win32-${VSCODE_ARCH}\\user-setup\\VSCodeSetup.exe" "assets\\${APP_NAME}UserSetup-${VSCODE_ARCH}-${RELEASE_VERSION}.exe"
   fi
 
   if [[ "${VSCODE_ARCH}" == "ia32" || "${VSCODE_ARCH}" == "x64" ]]; then
     if [[ "${SHOULD_BUILD_MSI}" != "no" ]]; then
-      # [VSCODIUM-EXPERT | 2026-03-26 00:45 CET] Robuste Suche: findet MSI unabhängig vom Präfix-Namen
       echo "Moving MSI"
-      find "build/windows/msi/releasedir" -name "*-${VSCODE_ARCH}-${RELEASE_VERSION}.msi" -exec mv {} assets/ \;
+      mv "build\\windows\\msi\\releasedir\\${APP_NAME}-${VSCODE_ARCH}-${RELEASE_VERSION}.msi" assets/
     fi
 
     if [[ "${SHOULD_BUILD_MSI_NOUP}" != "no" ]]; then
-      # [VSCODIUM-EXPERT | 2026-03-26 00:45 CET] Robuste Suche: findet MSI unabhängig vom Präfix-Namen
       echo "Moving MSI with disabled updates"
-      find "build/windows/msi/releasedir" -name "*-${VSCODE_ARCH}-updates-disabled-${RELEASE_VERSION}.msi" -exec mv {} assets/ \;
+      mv "build\\windows\\msi\\releasedir\\${APP_NAME}-${VSCODE_ARCH}-updates-disabled-${RELEASE_VERSION}.msi" assets/
     fi
   fi
 

@@ -33,57 +33,6 @@ node build/lib/policies/policyGenerator.ts build/lib/policies/policyData.jsonc w
 
 npm run gulp "vscode-win32-${VSCODE_ARCH}-min-ci"
 
-# [VSCODIUM-EXPERT | 2026-03-26 15:58] Iteration 2 – First-Run Autoinstaller
-# Ziel: Kuratierte Extensions sollen als "Installiert" (User) erscheinen, nicht als Built-in.
-# Maßnahme: Keine Kopie nach resources/app/extensions mehr. Stattdessen:
-#  1) Kuratierte Extensions nach resources/app/kullisa-curated legen
-#  2) First-Run Bootstrap-Skript nach resources/app/kullisa/
-#  3) Hook in out/main.js injizieren, der das Bootstrap lädt
-
-# 1) Kuratierte Extensions vorbereiten
-if [ -d "../extensions" ]; then
-  echo "=== Kullisa: Kuratierte Extensions für User-Installation vorbereiten ==="
-  mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated"
-  cp -r ../extensions/* "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated/"
-  echo "=== Kullisa: $(ls ../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated/ | wc -l) kuratierte Extensions vorbereitet ==="
-fi
-
-# Auch wenn keine Extensions mitgeliefert werden: Zielordner immer anlegen
-mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa-curated"
-
-# 2) Bootstrap-Skript ablegen
-mkdir -p "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa"
-cp ../kullisa/kullisa-first-run.js "../VSCode-win32-${VSCODE_ARCH}/resources/app/kullisa/"
-
-# 3) First-Run Hook robust injizieren (frühester Entry + Fallback)
-inject_hook() {
-  local target_js="$1"
-  local hook_line="$2"
-  if [ -f "$target_js" ]; then
-    if grep -q "kullisa-first-run.js" "$target_js"; then
-      echo "=== Kullisa: Hook bereits vorhanden in $target_js ==="
-    else
-      echo "=== Kullisa: Injiziere First-Run Hook in $target_js ==="
-      local tmp_file="${target_js}.kullisa.tmp"
-      printf "\n;%s\n" "$hook_line" > "$tmp_file"
-      cat "$target_js" >> "$tmp_file"
-      mv "$tmp_file" "$target_js"
-    fi
-  else
-    echo "=== Kullisa: WARNUNG: Zieldatei nicht gefunden: $target_js ==="
-  fi
-}
-
-# Preferierter Entry: out/vs/code/electron-main/main.js (sehr früh im Main-Prozess)
-MAIN_ENTRY_A="../VSCode-win32-${VSCODE_ARCH}/resources/app/out/vs/code/electron-main/main.js"
-HOOK_A="try{require('../../../../kullisa/kullisa-first-run.js');if(typeof console!=='undefined'&&console.log){console.log('[KULLISA] First-Run Hook A geladen')}}catch(e){if(typeof console!=='undefined'&&console.error){console.error('[KULLISA] First-Run require A failed',e)}}"
-inject_hook "$MAIN_ENTRY_A" "$HOOK_A"
-
-# Fallback: out/main.js (ältere Distro-Einstiegspunkte)
-MAIN_ENTRY_B="../VSCode-win32-${VSCODE_ARCH}/resources/app/out/main.js"
-HOOK_B="try{require('../kullisa/kullisa-first-run.js');if(typeof console!=='undefined'&&console.log){console.log('[KULLISA] First-Run Hook B geladen')}}catch(e){if(typeof console!=='undefined'&&console.error){console.error('[KULLISA] First-Run require B failed',e)}}"
-inject_hook "$MAIN_ENTRY_B" "$HOOK_B"
-
 . ../build_cli.sh
 
 if [[ "${VSCODE_ARCH}" == "x64" ]]; then

@@ -25,8 +25,7 @@ on:
     - '**/*.md'
 
 env:
-  # [VSCODIUM-EXPERT | 2026-03-26] APP_NAME auf Kullisa Stage gesetzt
-  APP_NAME: Kullisa Stage
+  APP_NAME: VSCodium
   ASSETS_REPOSITORY: ${{ github.repository }}
   BINARY_NAME: codium
   GH_REPO_PATH: ${{ github.repository }}
@@ -218,7 +217,7 @@ jobs:
 
       - name: Prepare assets
         run: ./prepare_assets.sh
-        if: env.SHOULD_BUILD == 'yes'
+        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
 
       - name: Upload unsigned artifacts
         id: upload-unsigned-artifacts
@@ -229,7 +228,7 @@ jobs:
             assets/*.exe
             assets/*.msi
           retention-days: 1
-        if: env.SHOULD_BUILD == 'yes'
+        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
 
       - name: Signing
         uses: signpath/github-action-submit-signing-request@v2
@@ -244,11 +243,11 @@ jobs:
           # 8h to manually approve the request
           wait-for-completion-timeout-in-seconds: 28800
           output-artifact-directory: assets/
-        if: env.SHOULD_BUILD == 'yes'
+        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
 
       - name: Prepare checksums
         run: ./prepare_checksums.sh
-        if: env.SHOULD_BUILD == 'yes'
+        if: env.SHOULD_BUILD == 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
 
       - name: Release
         env:

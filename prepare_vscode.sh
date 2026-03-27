@@ -15,12 +15,6 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 { set +x; } 2>/dev/null
 
-# [VSCODIUM-EXPERT | 2026-03-26 16:00] Iteration 2 – Built‑in‑Kopie entfernt
-# Hintergrund: Extensions dürfen NICHT als „Eingebaut“ erscheinen. Die kuratierte Liste
-# wird stattdessen beim Packaging nach resources/app/kullisa-curated gelegt und beim
-# ersten App‑Start in das User‑Verzeichnis installiert (siehe First‑Run Bootstrap).
-# Daher: Keine Kopie mehr nach resources/app/extensions in dieser Phase.
-
 # {{{ product.json
 cp product.json{,.bak}
 
@@ -99,22 +93,21 @@ if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
   setpath "product" "win32ContextMenu.x64.clsid" "90AAD229-85FD-43A3-B82D-8598A88829CF"
   setpath "product" "win32ContextMenu.arm64.clsid" "7544C31C-BDBF-4DDF-B15E-F73A46D6723D"
 else
-  # [VSCODIUM-EXPERT | 2026-03-25 22:00] Iteration 1 – Sichere Branding-Änderungen: Anzeigenamen auf Kullisa Stage gesetzt
-  setpath "product" "nameShort" "Kullisa Stage"
-  setpath "product" "nameLong" "Kullisa Stage"
+  setpath "product" "nameShort" "VSCodium"
+  setpath "product" "nameLong" "VSCodium"
   setpath "product" "applicationName" "codium"
-  setpath "product" "linuxIconName" "kullisa"
+  setpath "product" "linuxIconName" "vscodium"
   setpath "product" "quality" "stable"
-  setpath "product" "urlProtocol" "kullisa"
+  setpath "product" "urlProtocol" "vscodium"
   setpath "product" "serverApplicationName" "codium-server"
   setpath "product" "serverDataFolderName" ".vscodium-server"
   setpath "product" "darwinBundleIdentifier" "com.vscodium"
-  setpath "product" "win32AppUserModelId" "KullisaLabs.KullisaStage"
-  setpath "product" "win32DirName" "Kullisa Stage"
+  setpath "product" "win32AppUserModelId" "VSCodium.VSCodium"
+  setpath "product" "win32DirName" "VSCodium"
   setpath "product" "win32MutexName" "vscodium"
-  setpath "product" "win32NameVersion" "Kullisa Stage"
+  setpath "product" "win32NameVersion" "VSCodium"
   setpath "product" "win32RegValueName" "VSCodium"
-  setpath "product" "win32ShellNameShort" "Kullisa Stage"
+  setpath "product" "win32ShellNameShort" "VSCodium"
   setpath "product" "win32AppId" "{{763CBF88-25C6-4B10-952F-326AE657F16B}"
   setpath "product" "win32x64AppId" "{{88DA3577-054F-4CA1-8122-7D820494CFFB}"
   setpath "product" "win32arm64AppId" "{{67DEE444-3D04-4258-B92A-BC1F0FF2CAE4}"
@@ -135,9 +128,6 @@ echo "${jsonTmp}" > product.json && unset jsonTmp
 
 cat product.json
 # }}}
-
-# [VSCODIUM-EXPERT | 2026-03-26] Theme: Default Light Modern wird über product.json configurationDefaults gesetzt
-# Kein Code nötig — product.json Zeile "configurationDefaults.workbench.colorTheme" übernimmt das
 
 # include common functions
 . ../utils.sh
@@ -242,12 +232,11 @@ replace 's|Microsoft Corporation|VSCodium|' package.json
 cp resources/server/manifest.json{,.bak}
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  setpath "resources/server/manifest" "name" "Kullisa Stage - Insiders"
-  setpath "resources/server/manifest" "short_name" "Kullisa Stage - Insiders"
+  setpath "resources/server/manifest" "name" "VSCodium - Insiders"
+  setpath "resources/server/manifest" "short_name" "VSCodium - Insiders"
 else
-  # [VSCODIUM-EXPERT | 2026-03-25 22:00] Iteration 1 – Server-Manifest-Name auf Kullisa Stage gesetzt
-  setpath "resources/server/manifest" "name" "Kullisa Stage"
-  setpath "resources/server/manifest" "short_name" "Kullisa Stage"
+  setpath "resources/server/manifest" "name" "VSCodium"
+  setpath "resources/server/manifest" "short_name" "VSCodium"
 fi
 
 # announcements
@@ -255,9 +244,8 @@ replace "s|\\[\\/\\* BUILTIN_ANNOUNCEMENTS \\*\\/\\]|$( tr -d '\n' < ../announce
 
 ../undo_telemetry.sh
 
-# [VSCODIUM-EXPERT | 2026-03-25 22:00] Iteration 1 – Hersteller-Name in electron.ts auf Kullisa Labs gesetzt
-replace 's|Microsoft Corporation|Kullisa Labs|' build/lib/electron.ts
-replace 's|([0-9]) Microsoft|\1 Kullisa Labs|' build/lib/electron.ts
+replace 's|Microsoft Corporation|VSCodium|' build/lib/electron.ts
+replace 's|([0-9]) Microsoft|\1 VSCodium|' build/lib/electron.ts
 
 if [[ "${OS_NAME}" == "linux" ]]; then
   # microsoft adds their apt repo to sources
