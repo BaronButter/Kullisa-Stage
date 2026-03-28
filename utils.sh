@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-/*
-  Author: VSCODIUM-EXPERT
-  Date: 2026-03-27
-  Time: 20:55 CET
-  Description: Anpassung der Standard-Variablen für Kullisa Stage Branding.
-*/
+# Author: VSCODIUM-EXPERT
+# Date: 2026-03-27
+# Time: 20:55 CET
+# Description: Anpassung der Standard-Variablen für Kullisa Stage Branding.
 
 APP_NAME="${APP_NAME:-Kullisa Stage}"
 APP_NAME_LC="$( echo "${APP_NAME}" | awk '{print tolower($0)}' )"

@@ -13,12 +13,10 @@ cp -f LICENSE vscode/LICENSE.txt
 
 cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
-/*
-  Author: VSCODIUM-EXPERT
-  Date: 2026-03-27
-  Time: 21:05 CET
-  Description: Implementierung der dynamischen Namensersetzung (Branding) und Theme-Vorgabe.
-*/
+# Author: VSCODIUM-EXPERT
+# Date: 2026-03-27
+# Time: 21:05 CET
+# Description: Implementierung der dynamischen Namensersetzung (Branding) und Theme-Vorgabe.
 
 # Branding-Ersetzungen im gesamten Quellcode
 # Wir ersetzen "VSCodium" durch den konfigurierten APP_NAME

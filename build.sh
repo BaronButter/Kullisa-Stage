@@ -5,12 +5,10 @@ set -ex
 
 . version.sh
 
-/*
-  Author: VSCODIUM-EXPERT
-  Date: 2026-03-27
-  Time: 21:40 CET
-  Description: Priorisierung der portablen Version für schnelle Iterationen.
-*/
+# Author: VSCODIUM-EXPERT
+# Date: 2026-03-27
+# Time: 21:40 CET
+# Description: Priorisierung der portablen Version für schnelle Iterationen.
 
 if [[ "${SHOULD_BUILD}" == "yes" ]]; then
   echo "MS_COMMIT=\"${MS_COMMIT}\""

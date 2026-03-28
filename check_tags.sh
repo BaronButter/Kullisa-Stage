@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2129
 
-/*
-  Author: VSCODIUM-EXPERT
-  Date: 2026-03-28
-  Time: 19:45 CET
-  Description: Fixierung der VSCodium-Version auf 1.112.02066 und Behebung des Syntaxfehlers.
-*/
+# Author: VSCODIUM-EXPERT
+# Date: 2026-03-28
+# Time: 19:45 CET
+# Description: Fixierung der VSCodium-Version auf 1.112.02066 und Behebung des Syntaxfehlers.
 
 # Env Paramaters
 # CHECK_ALL: yes | no
