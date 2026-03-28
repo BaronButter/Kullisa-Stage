@@ -123,6 +123,13 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
 
   cd ..
 
+  # Portable ZIP Erzeugung (Kullisa Stage Fast-Track)
+  echo "Erzeuge portable ZIP-Version..."
+  cd "vscode/.build/win32-${VSCODE_ARCH}"
+  # Wir nutzen den bereits von Gulp erstellten archive-Ordner
+  powershell -Command "Compress-Archive -Path archive/* -DestinationPath ../../../assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip -Force"
+  cd ../../..
+
   if [[ "${SHOULD_BUILD_EXE_SYS}" != "no" ]]; then
     echo "Moving System EXE"
     mv "vscode\\.build\\win32-${VSCODE_ARCH}\\system-setup\\VSCodeSetup.exe" "assets\\${APP_NAME}Setup-${VSCODE_ARCH}-${RELEASE_VERSION}.exe"

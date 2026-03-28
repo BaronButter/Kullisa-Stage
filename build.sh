@@ -5,6 +5,13 @@ set -ex
 
 . version.sh
 
+/*
+  Author: VSCODIUM-EXPERT
+  Date: 2026-03-27
+  Time: 21:40 CET
+  Description: Priorisierung der portablen Version für schnelle Iterationen.
+*/
+
 if [[ "${SHOULD_BUILD}" == "yes" ]]; then
   echo "MS_COMMIT=\"${MS_COMMIT}\""
 
@@ -21,6 +28,10 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
   npm run gulp compile-extension-media
   npm run gulp compile-extensions-build
   npm run gulp minify-vscode
+
+  # Kullisa Stage: Immer die portable Version (archive) bauen
+  echo "Baue portable Version (archive)..."
+  npm run gulp "vscode-win32-${VSCODE_ARCH}-archive"
 
   if [[ "${OS_NAME}" == "osx" ]]; then
     # remove win32 node modules

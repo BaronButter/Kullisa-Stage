@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
-APP_NAME="${APP_NAME:-VSCodium}"
+/*
+  Author: VSCODIUM-EXPERT
+  Date: 2026-03-27
+  Time: 20:55 CET
+  Description: Anpassung der Standard-Variablen für Kullisa Stage Branding.
+*/
+
+APP_NAME="${APP_NAME:-Kullisa Stage}"
 APP_NAME_LC="$( echo "${APP_NAME}" | awk '{print tolower($0)}' )"
-ASSETS_REPOSITORY="${ASSETS_REPOSITORY:-VSCodium/vscodium}"
-BINARY_NAME="${BINARY_NAME:-codium}"
-GH_REPO_PATH="${GH_REPO_PATH:-VSCodium/vscodium}"
-ORG_NAME="${ORG_NAME:-VSCodium}"
+ASSETS_REPOSITORY="${ASSETS_REPOSITORY:-BaronButter/Kullisa-Stage}"
+BINARY_NAME="${BINARY_NAME:-kullisa}"
+GH_REPO_PATH="${GH_REPO_PATH:-BaronButter/Kullisa-Stage}"
+ORG_NAME="${ORG_NAME:-KullisaLabs}"
 TUNNEL_APP_NAME="${TUNNEL_APP_NAME:-"${BINARY_NAME}-tunnel"}"
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then

@@ -13,6 +13,18 @@ cp -f LICENSE vscode/LICENSE.txt
 
 cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
+/*
+  Author: VSCODIUM-EXPERT
+  Date: 2026-03-27
+  Time: 21:05 CET
+  Description: Implementierung der dynamischen Namensersetzung (Branding) und Theme-Vorgabe.
+*/
+
+# Branding-Ersetzungen im gesamten Quellcode
+# Wir ersetzen "VSCodium" durch den konfigurierten APP_NAME
+find . -type f -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" | xargs sed -i "s/VSCodium/${APP_NAME}/g"
+find . -type f -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" | xargs sed -i "s/codium/${BINARY_NAME}/g"
+
 { set +x; } 2>/dev/null
 
 # {{{ product.json
@@ -114,12 +126,20 @@ else
   setpath "product" "win32UserAppId" "{{0FD05EB4-651E-4E78-A062-515204B47A3A}"
   setpath "product" "win32x64UserAppId" "{{2E1F05D1-C245-4562-81EE-28188DB6FD17}"
   setpath "product" "win32arm64UserAppId" "{{57FD70A5-1B8D-4875-9F40-C5553F094828}"
-  setpath "product" "tunnelApplicationName" "codium-tunnel"
-  setpath "product" "win32TunnelServiceMutex" "vscodium-tunnelservice"
-  setpath "product" "win32TunnelMutex" "vscodium-tunnel"
+  setpath "product" "tunnelApplicationName" "${BINARY_NAME}-tunnel"
+  setpath "product" "win32TunnelServiceMutex" "${BINARY_NAME}-tunnelservice"
+  setpath "product" "win32TunnelMutex" "${BINARY_NAME}-tunnel"
   setpath "product" "win32ContextMenu.x64.clsid" "D910D5E6-B277-4F4A-BDC5-759A34EEE25D"
   setpath "product" "win32ContextMenu.arm64.clsid" "4852FC55-4A84-4EA1-9C86-D53BE3DF83C0"
+  
+  # Theme-Vorgabe: Default Light Modern
+  setpath_json "product" "configurationDefaults" '{"workbench.colorTheme": "Default Light Modern"}'
 fi
+
+# Extensions in den Built-in Ordner kopieren
+echo "Kopiere Kullisa Extensions..."
+mkdir -p resources/app/extensions
+cp -rp ../extensions/* resources/app/extensions/ 2>/dev/null || true
 
 setpath_json "product" "tunnelApplicationConfig" '{}'
 

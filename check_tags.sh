@@ -46,8 +46,16 @@ else
       fi
     fi
 
-    if [[ "${SHOULD_BUILD}" != "yes" ]]; then
-      export RELEASE_VERSION="${LATEST_VERSION}"
+    /*
+  Author: VSCODIUM-EXPERT
+  Date: 2026-03-27
+  Time: 21:00 CET
+  Description: Fixierung der VSCodium-Version auf 1.112.02066, um Upstream-Konflikte zu vermeiden.
+*/
+
+export SHOULD_BUILD="yes"
+export RELEASE_VERSION="1.112.02066"
+exit 0
       echo "RELEASE_VERSION=${RELEASE_VERSION}" >> "${GITHUB_ENV}"
 
       echo "Switch to release version: ${RELEASE_VERSION}"
