@@ -27,9 +27,9 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
   npm run gulp compile-extensions-build
   npm run gulp minify-vscode
 
-  # Kullisa Stage: Immer die portable Version (archive) bauen
-  echo "Baue portable Version (archive)..."
-  npm run gulp "vscode-win32-${VSCODE_ARCH}-archive"
+  # Kullisa Stage: Immer die portable Version (min-ci) bauen
+  echo "Baue portable Version (min-ci)..."
+  npm run gulp "vscode-win32-${VSCODE_ARCH}-min-ci"
 
   if [[ "${OS_NAME}" == "osx" ]]; then
     # remove win32 node modules
