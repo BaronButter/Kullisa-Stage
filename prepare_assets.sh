@@ -98,7 +98,11 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   npm run gulp "vscode-win32-${VSCODE_ARCH}-inno-updater"
 
   if [[ "${SHOULD_BUILD_ZIP}" != "no" ]]; then
-    7z.exe a -tzip "../assets/${APP_NAME}-win32-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" -x!CodeSignSummary*.md -x!tools "../VSCode-win32-${VSCODE_ARCH}/*" -r
+    echo "Erzeuge portable ZIP-Version..."
+    # Wir nutzen 7z (Standard auf GitHub Windows Runnern)
+    # Der Ordner liegt im Hauptverzeichnis (..) relativ zum Skript-Aufruf? 
+    # Nein, das Skript wird vom Root aufgerufen. Also ist es ./VSCode-win32-x64
+    7z a -tzip "assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" "./VSCode-win32-${VSCODE_ARCH}/*"
   fi
 
   # . ../build/windows/appx/build.sh
@@ -122,19 +126,6 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   fi
 
   cd ..
-
-  # Portable ZIP Erzeugung (Kullisa Stage Fast-Track)
-  echo "Suche Build-Ordner für portable Version..."
-  BUILD_DIR=$(find . -maxdepth 2 -name "VSCode-win32-${VSCODE_ARCH}" -type d | head -n 1)
-  
-  if [[ -n "${BUILD_DIR}" ]]; then
-    echo "Build-Ordner gefunden: ${BUILD_DIR}"
-    echo "Erzeuge portable ZIP-Version..."
-    7z a -tzip "assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" "${BUILD_DIR}/*"
-  else
-    echo "FEHLER: Build-Ordner VSCode-win32-${VSCODE_ARCH} nicht gefunden!"
-    ls -R . | grep "VSCode-win32" || true
-  fi
 
   if [[ "${SHOULD_BUILD_EXE_SYS}" != "no" ]]; then
     echo "Moving System EXE"

@@ -33,6 +33,10 @@ env:
   OS_NAME: windows
   VERSIONS_REPOSITORY: ${{ github.repository_owner }}/versions
   VSCODE_QUALITY: stable
+  SHOULD_BUILD_ZIP: 'yes'
+  SHOULD_BUILD_EXE_SYS: 'yes'
+  SHOULD_BUILD_EXE_USR: 'yes'
+  SHOULD_BUILD_MSI: 'yes'
 
 jobs:
   check:

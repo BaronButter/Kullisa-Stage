@@ -27,10 +27,6 @@ if [[ "${SHOULD_BUILD}" == "yes" ]]; then
   npm run gulp compile-extensions-build
   npm run gulp minify-vscode
 
-  # Kullisa Stage: Immer die portable Version (min-ci) bauen
-  echo "Baue portable Version (min-ci)..."
-  npm run gulp "vscode-win32-${VSCODE_ARCH}-min-ci"
-
   if [[ "${OS_NAME}" == "osx" ]]; then
     # remove win32 node modules
     rm -f .build/extensions/ms-vscode.js-debug/src/win32-app-container-tokens.*.node
