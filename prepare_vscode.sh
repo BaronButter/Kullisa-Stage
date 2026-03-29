@@ -310,6 +310,8 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   # code.iss
   sed -i 's|https://code.visualstudio.com|https://vscodium.com|' build/win32/code.iss
   sed -i 's|Microsoft Corporation|VSCodium|' build/win32/code.iss
+  # Deaktiviere AppX-Referenzen in code.iss, da wir kein AppX bauen (verursacht Fehler in Inno Setup)
+  sed -i '/appx\\code_.*\.appx/d' build/win32/code.iss
 fi
 
 rebrand
