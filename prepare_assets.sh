@@ -99,10 +99,8 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
 
   if [[ "${SHOULD_BUILD_ZIP}" != "no" ]]; then
     echo "Erzeuge portable ZIP-Version..."
-    # Wir nutzen 7z (Standard auf GitHub Windows Runnern)
-    # Der Ordner liegt im Hauptverzeichnis (..) relativ zum Skript-Aufruf? 
-    # Nein, das Skript wird vom Root aufgerufen. Also ist es ./VSCode-win32-x64
-    7z a -tzip "assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" "./VSCode-win32-${VSCODE_ARCH}/*"
+    # Der Ordner liegt im Hauptverzeichnis (..) relativ zum vscode-Ordner
+    7z a -tzip "../assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" "../VSCode-win32-${VSCODE_ARCH}/*"
   fi
 
   # . ../build/windows/appx/build.sh
