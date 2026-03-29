@@ -125,8 +125,8 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
 
   # Portable ZIP Erzeugung (Kullisa Stage Fast-Track)
   echo "Erzeuge portable ZIP-Version..."
-  # Wir nutzen den von Gulp erstellten min-ci Ordner
-  powershell -Command "Compress-Archive -Path VSCode-win32-${VSCODE_ARCH}/* -DestinationPath assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip -Force"
+  # Wir nutzen 7z (Standard auf GitHub Windows Runnern)
+  7z a -tzip "assets/KullisaStage-Portable-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" "./VSCode-win32-${VSCODE_ARCH}/*"
 
   if [[ "${SHOULD_BUILD_EXE_SYS}" != "no" ]]; then
     echo "Moving System EXE"
