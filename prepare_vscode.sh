@@ -19,9 +19,19 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 # Description: Implementierung der dynamischen Namensersetzung (Branding) und Theme-Vorgabe.
 
 # Branding-Ersetzungen im gesamten Quellcode
-# Wir ersetzen "VSCodium" durch den konfigurierten APP_NAME
-find . -type f -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" | xargs sed -i "s/VSCodium/${APP_NAME}/g"
-find . -type f -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" | xargs sed -i "s/codium/${BINARY_NAME}/g"
+# Wir führen dies erst am Ende aus, nachdem alle Patches angewendet wurden.
+function rebrand() {
+  echo "Starte Branding-Prozess: VSCodium -> ${APP_NAME}..."
+  # Wir nutzen find mit einem Loop, um die 'replace' Funktion aus utils.sh zu nutzen (sicherer für macOS/Linux)
+  # oder wir nutzen sed direkt, aber vorsichtiger.
+  if is_gnu_sed; then
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i "s/VSCodium/${APP_NAME}/g"
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i "s/codium/${BINARY_NAME}/g"
+  else
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i '' "s/VSCodium/${APP_NAME}/g"
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i '' "s/codium/${BINARY_NAME}/g"
+  fi
+}
 
 { set +x; } 2>/dev/null
 
@@ -134,19 +144,17 @@ else
   setpath_json "product" "configurationDefaults" '{"workbench.colorTheme": "Default Light Modern"}'
 fi
 
-# Extensions in den Built-in Ordner kopieren
 echo "Kopiere Kullisa Extensions..."
 mkdir -p resources/app/extensions
 cp -rp ../extensions/* resources/app/extensions/ 2>/dev/null || true
 
+echo "Initialisiere product.json..."
 setpath_json "product" "tunnelApplicationConfig" '{}'
 
 jsonTmp=$( jq -s '.[0] * .[1]' product.json ../product.json )
 echo "${jsonTmp}" > product.json && unset jsonTmp
 
-cat product.json
-# }}}
-
+echo "Wende Patches an..."
 # include common functions
 . ../utils.sh
 
@@ -223,9 +231,9 @@ cp ../npmrc .npmrc
 
 for i in {1..5}; do # try 5 times
   if [[ "${CI_BUILD}" != "no" && "${OS_NAME}" == "osx" ]]; then
-    CXX=clang++ npm ci && break
+    CXX=clang++ npm install && break
   else
-    npm ci && break
+    npm install && break
   fi
 
   if [[ $i == 5 ]]; then
@@ -303,5 +311,7 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   sed -i 's|https://code.visualstudio.com|https://vscodium.com|' build/win32/code.iss
   sed -i 's|Microsoft Corporation|VSCodium|' build/win32/code.iss
 fi
+
+rebrand
 
 cd ..
