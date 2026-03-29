@@ -16,11 +16,13 @@ set -e
 
 # 1. Version einfrieren (Kullisa Stage Stabilitäts-Garantie)
 export SHOULD_BUILD="yes"
+export SHOULD_DEPLOY="yes"
 export RELEASE_VERSION="1.112.02066"
 
 # Für GitHub Actions Umgebungsvariablen setzen
 if [[ "${GITHUB_ENV}" ]]; then
   echo "SHOULD_BUILD=${SHOULD_BUILD}" >> "${GITHUB_ENV}"
+  echo "SHOULD_DEPLOY=${SHOULD_DEPLOY}" >> "${GITHUB_ENV}"
   echo "RELEASE_VERSION=${RELEASE_VERSION}" >> "${GITHUB_ENV}"
 fi
 
