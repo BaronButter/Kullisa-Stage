@@ -22,11 +22,11 @@ jobs:
   build:
     runs-on: macos-15
     env:
-      APP_NAME: VSCodium
+      APP_NAME: Kullisa Stage
       ASSETS_REPOSITORY: ${{ github.repository }}-insiders
-      BINARY_NAME: codium-insiders
+      BINARY_NAME: kullisa-insiders
       GH_REPO_PATH: ${{ github.repository }}
-      ORG_NAME: ${{ github.repository_owner }}
+      ORG_NAME: KullisaLabs
       OS_NAME: osx
       SOURCEMAPS_REPOSITORY: ${{ github.repository_owner }}/sourcemaps
       VERSIONS_REPOSITORY: ${{ github.repository_owner }}/versions

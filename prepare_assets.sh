@@ -95,6 +95,10 @@ if [[ "${OS_NAME}" == "osx" ]]; then
 elif [[ "${OS_NAME}" == "windows" ]]; then
   cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
+  # Deaktiviere AppX-Referenzen in code.iss, da wir kein AppX bauen (verursacht Fehler in Inno Setup)
+  # Wir löschen alle Zeilen, die "appx" und ".appx" enthalten.
+  sed -i '/appx.*\.appx/d' build/win32/code.iss
+
   npm run gulp "vscode-win32-${VSCODE_ARCH}-inno-updater"
 
   if [[ "${SHOULD_BUILD_ZIP}" != "no" ]]; then
