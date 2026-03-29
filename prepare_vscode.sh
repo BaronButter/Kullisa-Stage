@@ -23,13 +23,15 @@ cd vscode || { echo "'vscode' dir not found"; exit 1; }
 function rebrand() {
   echo "Starte Branding-Prozess: VSCodium -> ${APP_NAME}..."
   # Wir nutzen find mit einem Loop, um die 'replace' Funktion aus utils.sh zu nutzen (sicherer für macOS/Linux)
-  # oder wir nutzen sed direkt, aber vorsichtiger.
+  # Wir schließen .iss, .wxs, .wxl (Windows MSI/Inno) und .desktop (Linux) mit ein.
+  local patterns="*.json *.ts *.js *.nls.json *.iss *.wxs *.wxl *.desktop *.appdata.xml *.spec.template *.yaml"
+  
   if is_gnu_sed; then
-    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i "s/VSCodium/${APP_NAME}/g"
-    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i "s/codium/${BINARY_NAME}/g"
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" -o -name "*.iss" -o -name "*.wxs" -o -name "*.wxl" -o -name "*.desktop" -o -name "*.appdata.xml" -o -name "*.spec.template" -o -name "*.yaml" \) -print0 | xargs -0 -r sed -i "s/VSCodium/${APP_NAME}/g"
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" -o -name "*.iss" -o -name "*.wxs" -o -name "*.wxl" -o -name "*.desktop" -o -name "*.appdata.xml" -o -name "*.spec.template" -o -name "*.yaml" \) -print0 | xargs -0 -r sed -i "s/codium/${BINARY_NAME}/g"
   else
-    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i '' "s/VSCodium/${APP_NAME}/g"
-    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" \) -print0 | xargs -0 -r sed -i '' "s/codium/${BINARY_NAME}/g"
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" -o -name "*.iss" -o -name "*.wxs" -o -name "*.wxl" -o -name "*.desktop" -o -name "*.appdata.xml" -o -name "*.spec.template" -o -name "*.yaml" \) -print0 | xargs -0 -r sed -i '' "s/VSCodium/${APP_NAME}/g"
+    find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.js" -o -name "*.nls.json" -o -name "*.iss" -o -name "*.wxs" -o -name "*.wxl" -o -name "*.desktop" -o -name "*.appdata.xml" -o -name "*.spec.template" -o -name "*.yaml" \) -print0 | xargs -0 -r sed -i '' "s/codium/${BINARY_NAME}/g"
   fi
 }
 
@@ -62,26 +64,18 @@ setpath "product" "introductoryVideosUrl" "https://go.microsoft.com/fwlink/?link
 setpath "product" "keyboardShortcutsUrlLinux" "https://go.microsoft.com/fwlink/?linkid=832144"
 setpath "product" "keyboardShortcutsUrlMac" "https://go.microsoft.com/fwlink/?linkid=832143"
 setpath "product" "keyboardShortcutsUrlWin" "https://go.microsoft.com/fwlink/?linkid=832145"
-setpath "product" "licenseUrl" "https://github.com/VSCodium/vscodium/blob/master/LICENSE"
+setpath "product" "licenseUrl" "https://github.com/${GH_REPO_PATH}/blob/master/LICENSE"
 setpath_json "product" "linkProtectionTrustedDomains" '["https://open-vsx.org"]'
 setpath "product" "releaseNotesUrl" "https://go.microsoft.com/fwlink/?LinkID=533483#vscode"
-setpath "product" "reportIssueUrl" "https://github.com/VSCodium/vscodium/issues/new"
+setpath "product" "reportIssueUrl" "https://github.com/${GH_REPO_PATH}/issues/new"
 setpath "product" "requestFeatureUrl" "https://go.microsoft.com/fwlink/?LinkID=533482"
 setpath "product" "tipsAndTricksUrl" "https://go.microsoft.com/fwlink/?linkid=852118"
 setpath "product" "twitterUrl" "https://go.microsoft.com/fwlink/?LinkID=533687"
 
 if [[ "${DISABLE_UPDATE}" != "yes" ]]; then
-  setpath "product" "updateUrl" "https://raw.githubusercontent.com/VSCodium/versions/refs/heads/master"
+  setpath "product" "updateUrl" "https://raw.githubusercontent.com/${VERSIONS_REPOSITORY}/refs/heads/master"
 
-  if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-    setpath "product" "downloadUrl" "https://github.com/VSCodium/vscodium-insiders/releases"
-  else
-    setpath "product" "downloadUrl" "https://github.com/VSCodium/vscodium/releases"
-  fi
-
-  # if [[ "${OS_NAME}" == "windows" ]]; then
-  #   setpath_json "product" "win32VersionedUpdate" "true"
-  # fi
+  setpath "product" "downloadUrl" "https://github.com/${ASSETS_REPOSITORY}/releases"
 fi
 
 if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
@@ -253,16 +247,37 @@ cp package.json{,.bak}
 
 setpath "package" "version" "${RELEASE_VERSION%-insider}"
 
-replace 's|Microsoft Corporation|VSCodium|' package.json
-
-cp resources/server/manifest.json{,.bak}
-
-if [[ "${VSCODE_QUALITY}" == "insider" ]]; then
-  setpath "resources/server/manifest" "name" "VSCodium - Insiders"
-  setpath "resources/server/manifest" "short_name" "VSCodium - Insiders"
-else
-  setpath "resources/server/manifest" "name" "VSCodium"
-  setpath "resources/server/manifest" "short_name" "VSCodium"
+replace "s|Microsoft Corporation|${APP_NAME}|" package.json
+...
+replace "s|Microsoft Corporation|${APP_NAME}|" build/lib/electron.ts
+replace "s|([0-9]) Microsoft|\\1 ${APP_NAME}|" build/lib/electron.ts
+...
+  # fix the packages metadata
+  # code.appdata.xml
+  sed -i "s|Visual Studio Code|${APP_NAME}|g" resources/linux/code.appdata.xml
+  sed -i "s|https://code.visualstudio.com/docs/setup/linux|https://github.com/${GH_REPO_PATH}#download-install|" resources/linux/code.appdata.xml
+  sed -i "s|https://code.visualstudio.com/home/home-screenshot-linux-lg.png|https://raw.githubusercontent.com/${GH_REPO_PATH}/master/icons/code.png|" resources/linux/code.appdata.xml
+...
+  # control.template
+  sed -i "s|Microsoft Corporation <vscode-linux@microsoft.com>|${APP_NAME} Team https://github.com/${GH_REPO_PATH}/graphs/contributors|"  resources/linux/debian/control.template
+  sed -i "s|Visual Studio Code|${APP_NAME}|g" resources/linux/debian/control.template
+  sed -i "s|https://code.visualstudio.com/docs/setup/linux|https://github.com/${GH_REPO_PATH}#download-install|" resources/linux/debian/control.template
+...
+  # code.spec.template
+  sed -i "s|Microsoft Corporation|${APP_NAME} Team|" resources/linux/rpm/code.spec.template
+  sed -i "s|Visual Studio Code Team <vscode-linux@microsoft.com>|${APP_NAME} Team https://github.com/${GH_REPO_PATH}/graphs/contributors|" resources/linux/rpm/code.spec.template
+  sed -i "s|Visual Studio Code|${APP_NAME}|" resources/linux/rpm/code.spec.template
+  sed -i "s|https://code.visualstudio.com/docs/setup/linux|https://github.com/${GH_REPO_PATH}#download-install|" resources/linux/rpm/code.spec.template
+...
+  # snapcraft.yaml
+  sed -i "s|Visual Studio Code|${APP_NAME}|" resources/linux/rpm/code.spec.template
+elif [[ "${OS_NAME}" == "windows" ]]; then
+  # code.iss
+  sed -i 's|https://code.visualstudio.com|https://vscodium.com|' build/win32/code.iss
+  sed -i "s|Microsoft Corporation|${APP_NAME}|" build/win32/code.iss
+  # Deaktiviere AppX-Referenzen in code.iss, da wir kein AppX bauen (verursacht Fehler in Inno Setup)
+  # Wir löschen alle Zeilen, die "appx" und ".appx" enthalten.
+  sed -i '/appx.*\.appx/d' build/win32/code.iss
 fi
 
 # announcements
@@ -311,7 +326,8 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   sed -i 's|https://code.visualstudio.com|https://vscodium.com|' build/win32/code.iss
   sed -i 's|Microsoft Corporation|VSCodium|' build/win32/code.iss
   # Deaktiviere AppX-Referenzen in code.iss, da wir kein AppX bauen (verursacht Fehler in Inno Setup)
-  sed -i '/appx\\code_.*\.appx/d' build/win32/code.iss
+  # Wir löschen alle Zeilen, die "appx" und ".appx" enthalten
+  sed -i '/appx.*\.appx/d' build/win32/code.iss
 fi
 
 rebrand

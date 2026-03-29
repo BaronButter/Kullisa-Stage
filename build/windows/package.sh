@@ -12,7 +12,7 @@ tar -xzf ./vscode.tar.gz
 cd vscode || { echo "'vscode' dir not found"; exit 1; }
 
 for i in {1..5}; do # try 5 times
-  npm ci && break
+  npm install && break
   if [[ $i == 5 ]]; then
     echo "Npm install failed too many times" >&2
     exit 1
@@ -26,6 +26,11 @@ node build/azure-pipelines/distro/mixin-npm.ts
 find .build/extensions -type f -name '*.node' -print -delete
 
 . ../build/windows/rtf/make.sh
+
+# Deaktiviere AppX-Referenzen in code.iss, da wir kein AppX bauen (verursacht Fehler in Inno Setup)
+# Wir löschen alle Zeilen, die "appx" und ".appx" enthalten. Dies muss HIER passieren, 
+# falls das gulp-Skript oder andere Schritte die Datei zurückgesetzt haben.
+sed -i '/appx.*\.appx/d' build/win32/code.iss
 
 # generate Group Policy definitions
 npm run copy-policy-dto --prefix build
