@@ -297,6 +297,6 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   sed -i '/appx.*\.appx/d' build/win32/code.iss
 fi
 
-rebrand
+# rebrand
 
 cd ..

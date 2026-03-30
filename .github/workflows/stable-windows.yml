@@ -25,11 +25,11 @@ on:
     - '**/*.md'
 
 env:
-  APP_NAME: Kullisa Stage
+  APP_NAME: VSCodium
   ASSETS_REPOSITORY: ${{ github.repository }}
-  BINARY_NAME: kullisa
+  BINARY_NAME: codium
   GH_REPO_PATH: ${{ github.repository }}
-  ORG_NAME: KullisaLabs
+  ORG_NAME: VSCodium
   OS_NAME: windows
   VERSIONS_REPOSITORY: ${{ github.repository_owner }}/versions
   VSCODE_QUALITY: stable
