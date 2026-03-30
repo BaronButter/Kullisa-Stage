@@ -155,7 +155,6 @@ jobs:
       matrix:
         vscode_arch:
           - x64
-          - arm64
     defaults:
       run:
         shell: bash
@@ -167,6 +166,11 @@ jobs:
       SHOULD_BUILD: ${{ (needs.check.outputs.SHOULD_BUILD == 'yes' || github.event.inputs.generate_assets == 'true') && 'yes' || 'no' }}
       SHOULD_DEPLOY: ${{ needs.check.outputs.SHOULD_DEPLOY }}
       VSCODE_ARCH: ${{ matrix.vscode_arch }}
+      SHOULD_BUILD_EXE_SYS: 'no'
+      SHOULD_BUILD_EXE_USR: 'no'
+      SHOULD_BUILD_MSI: 'no'
+      SHOULD_BUILD_MSI_NOUP: 'no'
+      SHOULD_BUILD_ZIP: 'yes'
     outputs:
       RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
       SHOULD_DEPLOY: ${{ env.SHOULD_DEPLOY }}
@@ -226,8 +230,7 @@ jobs:
         with:
           name: unsigned-${{ matrix.vscode_arch }}
           path: |
-            assets/*.exe
-            assets/*.msi
+            assets/*.zip
           retention-days: 1
         if: env.SHOULD_BUILD == 'yes' && vars.DISABLE_INSIDER_WINDOWS_SIGNING != 'yes' && (env.SHOULD_DEPLOY == 'yes' || github.event.inputs.generate_assets == 'true')
 

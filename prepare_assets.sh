@@ -102,7 +102,7 @@ elif [[ "${OS_NAME}" == "windows" ]]; then
   npm run gulp "vscode-win32-${VSCODE_ARCH}-inno-updater"
 
   if [[ "${SHOULD_BUILD_ZIP}" != "no" ]]; then
-    7z.exe a -tzip "../assets/${APP_NAME}-win32-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" -x!CodeSignSummary*.md -x!tools "../VSCode-win32-${VSCODE_ARCH}/*" -r
+    7z.exe a -tzip "../assets/${APP_NAME}-portable-win32-${VSCODE_ARCH}-${RELEASE_VERSION}.zip" -x!CodeSignSummary*.md -x!tools "../VSCode-win32-${VSCODE_ARCH}/*" -r
   fi
 
   # . ../build/windows/appx/build.sh
