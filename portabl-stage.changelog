@@ -15,9 +15,9 @@
 - **Fokus:** x64 Portable ZIP.
 - **Status:** ✅ ERFOLGREICH (Build & Permissions bestätigt)
 
-## Build 3: Operation Minimalismus & Text-Feinschliff
+## Build 3: Operation Minimalismus & Text-Feinschliff (REPARATUR)
 - **Branding:** Eliminierung der Editor-Wasserzeichen (letterpress) durch transparente Platzhalter.
 - **Branding:** Eliminierung des Activity-Bar Logos (oben links) durch transparente Platzhalter.
 - **Walkthrough:** Textänderung zu "Customize your Platform, learn the basics and start Creating."
-- **Welcome-Screen:** Unsichtbar-Schaltung der Microsoft Video-Tutorials (Invisible-Link-Ansatz in brand.patch).
-- **Status:** UMSETZUNG ABGESCHLOSSEN (Bereit für Push)
+- **Welcome-Screen:** Wiederherstellung des Video-Tutorial-Links (Reparatur der Patch-Datei nach Fehlversuch).
+- **Status:** REPARIERT (Bereit für Push)

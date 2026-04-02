@@ -14,9 +14,9 @@
 
 ## Phase 3: Build 3 - Operation Minimalismus & Text-Feinschliff - AKTUELL
 - [x] Dokumentation: Textänderungen in `05-exe-name-lizenz-texte.md` festhalten
-- [x] Placeholder: Transparente SVG in `Wiederherstellungsordner/icons-wasserzeichen/` erstellt
+- [x] Placeholder: Transparente SVG in `Wiederherstellungsordner/icons-wasserzeichen/` erstellen
 - [x] Logos eliminieren: Wasserzeichen und Activity-Bar-Icon durch Placeholder ersetzt
 - [x] Welcome-Screen: Texte in `patches/brand.patch` anpassen (Customize your Platform...)
-- [x] Video-Link: In `patches/brand.patch` unsichtbar machen (Titel/Beschreibung leeren)
-- [in_progress] Change Log: Änderungen in `portabl-stage.changelog` protokollieren
+- [x] Video-Link: In `patches/brand.patch` repariert (wieder sichtbar gemacht, um Patch-Fehler zu vermeiden)
+- [x] Change Log: Änderungen in `portabl-stage.changelog` protokollieren
 - [ ] Commit & Push für Build 3
