@@ -1213,7 +1213,7 @@ index 60f47c9..eb2c4b8 100644
  		id: 'Setup',
 -		title: localize('gettingStarted.setup.title', "Get started with VS Code"),
 +		title: localize('gettingStarted.setup.title', "Get started with !!APP_NAME!!"),
- 		description: localize('gettingStarted.setup.description', "Customize your Platform, learn the basics and start Creating."),
+ 		description: localize('gettingStarted.setup.description', "Customize your editor, learn the basics, and start coding"),
 @@ -258,3 +223,3 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
  		when: '!isWeb',
 -		walkthroughPageTitle: localize('gettingStarted.setup.walkthroughPageTitle', 'Setup VS Code'),
