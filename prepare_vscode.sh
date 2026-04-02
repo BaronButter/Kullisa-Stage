@@ -299,4 +299,7 @@ fi
 
 # rebrand
 
+# [VSCODIUM-EXPERT] Kullisa: Textanpassung im Welcome-Screen (Sicherer Weg via sed)
+replace 's|Customize your editor, learn the basics, and start coding|Customize your Platform, learn the basics and start Creating.|g' src/vs/workbench/contrib/welcomeGettingStarted/common/gettingStartedContent.ts
+
 cd ..
