@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 APP_NAME="${APP_NAME:-Kullisa Stage}"
-APP_NAME_LC="$( echo "${APP_NAME}" | awk '{print tolower($0)}' )"
+APP_NAME_LC="kullisastage"
 ASSETS_REPOSITORY="${ASSETS_REPOSITORY:-BaronButter/Kullisa-Stage}"
 BINARY_NAME="${BINARY_NAME:-codium}"
 GH_REPO_PATH="${GH_REPO_PATH:-BaronButter/Kullisa-Stage}"
