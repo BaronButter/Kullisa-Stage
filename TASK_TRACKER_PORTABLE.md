@@ -16,7 +16,7 @@
 - [x] Dokumentation: Textänderungen in `05-exe-name-lizenz-texte.md` festhalten
 - [x] Placeholder: Transparente SVG in `Wiederherstellungsordner/icons-wasserzeichen/` erstellen
 - [x] Logos eliminieren: Wasserzeichen und Activity-Bar-Icon durch Placeholder ersetzt
-- [x] Welcome-Screen: Texte in `patches/brand.patch` anpassen (Customize your Platform...)
-- [x] Video-Link: In `patches/brand.patch` repariert (wieder sichtbar gemacht, um Patch-Fehler zu vermeiden)
-- [x] Change Log: Änderungen in `portabl-stage.changelog` protokollieren
-- [ ] Commit & Push für Build 3
+- [x] Welcome-Screen: Texte in `patches/brand.patch` anpassen (Customize your Platform...) - TEST LÄUFT
+- [ ] Video-Link: In `patches/brand.patch` unsichtbar machen (Geplante nächste Sicherung)
+- [ ] Change Log: Änderungen in `portabl-stage.changelog` protokollieren
+- [ ] Finaler Build 3 Push
