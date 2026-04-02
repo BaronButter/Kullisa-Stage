@@ -1,0 +1,16 @@
+# Kullisa Stage - Change Log Portable
+
+## Build 1: Initialer Test-Build (Portable x64)
+- Deaktivierung der Signierung (Signing) in stable-windows.yml
+- Fixierung der Architektur auf x64
+- Aktivierung der portablen ZIP-Assets
+- Status: ✅ ERFOLGREICH (Portable ZIP Struktur bestätigt)
+
+## Build 2: "Super-Build" (Extensions + Branding + Assets)
+- **Extensions:** Injektion von 19 Extensions in `data/extensions/` via `package.sh`.
+- **Assets:** Austausch von `src/` und `icons/` mit Original-Branding (Logos, Wasserzeichen).
+- **Branding:** Anpassung von `utils.sh`, `prepare_vscode.sh` und `.github/workflows/stable-windows.yml` auf "Kullisa Stage" und "KullisaLabs".
+- **Rechtliches:** LICENSE-Datei wurde vom User manuell auf KullisaLabs und Alexander Leypold aktualisiert.
+- **Optimierung:** ZIP-Dateiname in `prepare_assets.sh` auf das kompakte Format `KullisaStage` ohne Leerzeichen vereinheitlicht.
+- **Fokus:** x64 Portable ZIP.
+- **Status:** Finalisiert für Push.

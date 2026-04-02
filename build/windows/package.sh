@@ -33,6 +33,14 @@ node build/lib/policies/policyGenerator.ts build/lib/policies/policyData.jsonc w
 
 npm run gulp "vscode-win32-${VSCODE_ARCH}-min-ci"
 
+# [VSCODIUM-EXPERT] Kullisa: Vorinstallierte Extensions im Portable Data Ordner integrieren
+if [ -d "../extensions" ]; then
+  echo "=== Kullisa: Erstelle Portable Data Struktur ==="
+  mkdir -p "../VSCode-win32-${VSCODE_ARCH}/data/extensions"
+  cp -r ../extensions/* "../VSCode-win32-${VSCODE_ARCH}/data/extensions/"
+  echo "=== Kullisa: Extensions erfolgreich injiziert ==="
+fi
+
 . ../build_cli.sh
 
 if [[ "${VSCODE_ARCH}" == "x64" ]]; then
