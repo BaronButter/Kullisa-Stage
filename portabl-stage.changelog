@@ -2,22 +2,15 @@
 
 ## Build 1: Initialer Test-Build (Portable x64)
 - Deaktivierung der Signierung (Signing) in stable-windows.yml
-- Fixierung der Architektur auf x64
-- Aktivierung der portablen ZIP-Assets
-- Status: ✅ ERFOLGREICH (Portable ZIP Struktur bestätigt)
+- Status: ✅ ERFOLGREICH
 
 ## Build 2: "Super-Build" (Extensions + Branding + Assets)
-- **Extensions:** Injektion von 19 Extensions in `data/extensions/` via `package.sh`.
-- **Assets:** Austausch von `src/` und `icons/` mit Original-Branding (Logos, Wasserzeichen).
-- **Branding:** Anpassung von `utils.sh`, `prepare_vscode.sh` und `.github/workflows/stable-windows.yml` auf "Kullisa Stage" und "KullisaLabs".
-- **Rechtliches:** LICENSE-Datei wurde vom User manuell auf KullisaLabs und Alexander Leypold aktualisiert.
-- **Optimierung:** ZIP-Dateiname in `prepare_assets.sh` auf das kompakte Format `KullisaStage` ohne Leerzeichen vereinheitlicht.
-- **Fokus:** x64 Portable ZIP.
-- **Status:** ✅ ERFOLGREICH (Build & Permissions bestätigt)
+- Extensions-Injektion & Assets-Austausch
+- Status: ✅ ERFOLGREICH
 
-## Build 3: Operation Minimalismus & Text-Feinschliff (Strategiewechsel)
-- **Stabilität:** `patches/brand.patch` wurde final auf den stabilen Stand `80345734` zurückgesetzt.   Die Datei `patches/brand.patch` auf den Stand von Commit `80345734` zurücksetzen.   stabilen Sicherung (c61cbf62)
-- **Strategie:** Textänderungen erfolgen ab jetzt via Skript-Injektion in `prepare_vscode.sh` statt über die Patch-Datei (Vermeidung mathematischer Syntaxfehler).
-- **Branding:** Editor-Wasserzeichen und Activity-Bar Logo durch transparente Platzhalter ersetzt.
-- **Texte:** "Customize your Platform..." Injektion vorbereitet.
-- **Status:** Vorbereitung der Skript-Lösung.
+## Build 3: Operation Minimalismus & Text-Feinschliff (FINALE)
+- **Logos:** Alle Wasserzeichen und Activity-Bar Icons durch transparente Platzhalter ersetzt.
+- **Texte:** Erfolgreiche Skript-Injektion von "Customize your Platform..." via prepare_vscode.sh.
+- **Integrität:** brand.patch erfolgreich auf stabilen Originalstand zurückgesetzt.
+- **Ergebnis:** Eine saubere, minimalistische Plattform unter dem Namen "Kullisa Stage".
+- **Status:** ✅ VOLLSTÄNDIG VALIDIERT

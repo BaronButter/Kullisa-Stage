@@ -1,0 +1,13 @@
+Willkommen bei Kullisa Stage - Deine portable Plattform für Kreativität.
+
+SO STARTEN SIE:
+1. Entpacken Sie diesen Ordner an einen Ort Ihrer Wahl (z.B. USB-Stick oder Desktop).
+2. Starten Sie die Anwendung durch einen Doppelklick auf 'kullisa.exe'.
+
+BESONDERHEITEN DIESER VERSION:
+- Portabel: Alle Einstellungen und Erweiterungen werden im Unterordner 'data' gespeichert.
+- Isoliert: Es werden keine Daten außerhalb dieses Ordners verändert.
+- Vorinstalliert: 19 ausgewählte Extensions sind bereits für Sie einsatzbereit.
+
+Viel Erfolg bei Ihrem Projekt!
+Ihr Kullisa Labs Team

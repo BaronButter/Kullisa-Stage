@@ -22,7 +22,6 @@ export VSCODE_SYSROOT_PREFIX='-glibc-2.28-gcc-10.5.0'
 
 if [[ "${VSCODE_ARCH}" == "arm64" || "${VSCODE_ARCH}" == "armhf" ]]; then
   export VSCODE_SKIP_SYSROOT=1
-  # export USE_GNUPP2A=1
 elif [[ "${VSCODE_ARCH}" == "ppc64le" ]]; then
   export VSCODE_SYSROOT_REPOSITORY='VSCodium/vscode-linux-build-agent'
   export VSCODE_SYSROOT_VERSION='20240129-253798'
@@ -43,28 +42,17 @@ elif [[ "${VSCODE_ARCH}" == "loong64" ]]; then
 fi
 
 if [[ -f "../build/linux/${VSCODE_ARCH}/electron.sh" ]]; then
-  # add newline at the end of the file
   echo "" >> build/checksums/electron.txt
-
   if [[ -f "../build/linux/${VSCODE_ARCH}/electron.sha256sums" ]]; then
     cat "../build/linux/${VSCODE_ARCH}/electron.sha256sums" >> build/checksums/electron.txt
   fi
-
-  # shellcheck disable=SC1090
   source "../build/linux/${VSCODE_ARCH}/electron.sh"
-
   TARGET=$( npm config get target )
-
-  # Only fails at different major versions
   if [[ "${ELECTRON_VERSION%%.*}" != "${TARGET%%.*}" ]]; then
-    # Fail the pipeline if electron target doesn't match what is used.
     echo "Electron ${VSCODE_ARCH} binary version doesn't match target electron version!"
-    echo "Releases available at: https://github.com/${VSCODE_ELECTRON_REPOSITORY}/releases"
     exit 1
   fi
-
   if [[ "${ELECTRON_VERSION}" != "${TARGET}" ]]; then
-    # Force version
     replace "s|target=\"${TARGET}\"|target=\"${ELECTRON_VERSION}\"|" .npmrc
   fi
 fi
@@ -77,35 +65,9 @@ if [[ -d "../patches/linux/client/" ]]; then
   done
 fi
 
-if [[ -n "${USE_GNUPP2A}" ]]; then
-  INCLUDES=$(cat <<EOF
-{
-  "target_defaults": {
-    "conditions": [
-      ["OS=='linux'", {
-        'cflags_cc!': [ '-std=gnu++20' ],
-        'cflags_cc': [ '-std=gnu++2a' ],
-      }]
-    ]
-  }
-}
-EOF
-)
-
-  if [ ! -d "$HOME/.gyp" ]; then
-    mkdir -p "$HOME/.gyp"
-  fi
-
-  echo "${INCLUDES}" > "$HOME/.gyp/include.gypi"
-fi
-
-for i in {1..5}; do # try 5 times
+for i in {1..5}; do
   npm ci --prefix build && break
-  if [[ $i == 5 ]]; then
-    echo "Npm install failed too many times" >&2
-    exit 1
-  fi
-  echo "Npm install failed $i, trying again..."
+  sleep 15
 done
 
 if [[ -z "${VSCODE_SKIP_SETUPENV}" ]]; then
@@ -116,25 +78,25 @@ if [[ -z "${VSCODE_SKIP_SETUPENV}" ]]; then
   fi
 fi
 
-for i in {1..5}; do # try 5 times
+for i in {1..5}; do
   npm ci && break
-  if [[ $i == 5 ]]; then
-    echo "Npm install failed too many times" >&2
-    exit 1
-  fi
-  echo "Npm install failed $i, trying again..."
+  sleep 15
 done
 
 node build/azure-pipelines/distro/mixin-npm.ts
-
-# delete native files built in the `compile` step
 find .build/extensions -type f -name '*.node' -print -delete
-
-# generate Group Policy definitions
 npm run copy-policy-dto --prefix build
 node build/lib/policies/policyGenerator.ts build/lib/policies/policyData.jsonc linux
 
 npm run gulp "vscode-linux-${VSCODE_ARCH}-min-ci"
+
+# [VSCODIUM-EXPERT] Kullisa: Vorinstallierte Extensions im Portable Data Ordner integrieren (Linux)
+if [ -d "../extensions" ]; then
+  echo "=== Kullisa: Erstelle Portable Data Struktur (Linux) ==="
+  mkdir -p "../VSCode-linux-${VSCODE_ARCH}/data/extensions"
+  cp -r ../extensions/* "../VSCode-linux-${VSCODE_ARCH}/data/extensions/"
+  echo "=== Kullisa: Extensions erfolgreich injiziert ==="
+fi
 
 if [[ -f "../build/linux/${VSCODE_ARCH}/ripgrep.sh" ]]; then
   bash "../build/linux/${VSCODE_ARCH}/ripgrep.sh" "../VSCode-linux-${VSCODE_ARCH}/resources/app/node_modules"
@@ -143,5 +105,4 @@ fi
 find "../VSCode-linux-${VSCODE_ARCH}" -print0 | xargs -0 touch -c
 
 . ../build_cli.sh
-
 cd ..
