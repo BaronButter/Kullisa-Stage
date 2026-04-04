@@ -41,6 +41,12 @@ if [ -d "../extensions" ]; then
   echo "=== Kullisa: Extensions erfolgreich injiziert ==="
 fi
 
+# [KULLISA-STAGE-EXPERT | 2026-04-04 03:45] Kopiere Betriebsanleitung in den Hauptordner
+if [ -f "../Betriebsanleitung.txt" ]; then
+  cp "../Betriebsanleitung.txt" "../VSCode-win32-${VSCODE_ARCH}/"
+  echo "=== Kullisa: Betriebsanleitung injiziert ==="
+fi
+
 . ../build_cli.sh
 
 if [[ "${VSCODE_ARCH}" == "x64" ]]; then

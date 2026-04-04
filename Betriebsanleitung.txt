@@ -1,7 +1,7 @@
 Willkommen bei Kullisa Stage - Deine portable Plattform für Kreativität.
 
 SO STARTEN SIE:
-1. Entpacken Sie diesen Ordner an einen Ort Ihrer Wahl (z.B. USB-Stick, Desktop oder Downloads).
+1. Speichern Sie diesen Ordner an einen Ort Ihrer Wahl (z.B. USB-Stick, Desktop oder Downloads).
 2. Starten Sie die Anwendung durch einen Doppelklick auf "Kullisa Stage.exe" .
 
 BESONDERHEITEN DIESER VERSION:

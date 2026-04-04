@@ -7,6 +7,7 @@
 - [x] Minimalismus-Interface (Transparente Logos)
 - [x] Text-Injektion ("Creating" statt "Coding")
 - [x] Build 3 Validierung durch User
+- [x] Betriebsanleitung integriert (Build 4)
 
 ## STATUS: ✅ OPERATION ERFOLGREICH ABGESCHLOSSEN
 Die portable Windows-Version ist bereit für den Einsatz im Ökosystem.
